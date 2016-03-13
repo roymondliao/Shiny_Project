@@ -1,3 +1,4 @@
+### SubProject  Star Plot - server.R
 options(warn = -1)
 library(shiny)
 if (!require("devtools")) install.packages('devtools')
@@ -7,16 +8,19 @@ if (!require("DT")) install.packages('DT')
 shinyServer(function(input, output){
   # input date range from web
   date_range <- reactive({
-      input$input_date
+        input$input_date
     })
   
   get_data <- reactive({
+    if(date_range()[2] > Sys.Date()){
+      require_date <- seq.Date(from = date_range()[1], to = Sys.Date()-1, by = "day")
+    }
     # enter date range to filter collection data
     require_date <- seq.Date(from = date_range()[1], to = date_range()[2], by = "day")
     # Initialization and get gp star data from mongodb "GPDailyStar"
     dailydata_week <- data.frame()
     for(d in 1:length(require_date)){
-      namespace <- paste(db = "GPDailyStar", require_date[d], sep = ".")
+      namespace <- paste(db = "GP_Daily_Star", require_date[d], sep = ".")
       collection_record <- mongo.find.all(mongo = mongo_EC2, ns = namespace, mongo.bson.empty())
       for(dd in 1:mongo.count(mongo_EC2, namespace)){
         dailydata <- getDataFromMongodb(collection_record[[dd]]) 
@@ -43,4 +47,8 @@ shinyServer(function(input, output){
     h1$addParams(dom = 'plots')
     return(h1)
   })
+  
+  #output$test <- renderPrint({
+  #  str(require_date)
+  #)
 })
