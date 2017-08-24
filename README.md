@@ -1,3 +1,2 @@
-# Shiny_Project
-***
+# Shiny Project
 The shiny product of past companies.
