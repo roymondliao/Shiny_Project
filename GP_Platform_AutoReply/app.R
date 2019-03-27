@@ -5,8 +5,7 @@ library(mailR)
 library(xlsx)
 library(readxl)
 library(dplyr)
-mongo_EC2 <- mongo.create(host = "54.148.221.90:27017", username = "yuyu", password = "roymond20*", db = "admin")
-# mongo_EC2 <- mongo.create(host = "localhost:27017", username = "yuyu", password = "roymond20*", db = "admin")
+mongo_EC2 <- mongo.create(host = "", username = "", password = "", db = "")
 # mongo.is.connected(mongo_EC2) # connect to mongo server check
 mongodb_change <- mongo_EC2
 options(shiny.maxRequestSize=10*1024^2) 
